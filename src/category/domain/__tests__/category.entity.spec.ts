@@ -1,3 +1,4 @@
+import { Uuid } from "../../../shared/domain/value-objects/uuid.vo"
 import { Category } from "../category.entity"
 
 describe('Category Unit Tests', () => {
@@ -6,7 +7,7 @@ describe('Category Unit Tests', () => {
             name: 'Movie'
         })
 
-        expect(category.category_id).toBeUndefined()
+        expect(category.category_id).toBeTruthy()
         expect(category.name).toBe('Movie')
         expect(category.description).toBeNull()
         expect(category.is_active).toBeTruthy()

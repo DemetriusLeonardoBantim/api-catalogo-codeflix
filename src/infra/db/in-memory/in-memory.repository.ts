@@ -51,15 +51,3 @@ export abstract class InMemoryRepository <E extends Entity, EntityId extends Val
 
     abstract getEntity(): new (...args: any[]) => E;
 }
-
-export interface ISearchableRepository 
- < 
-    E extends Entity, 
-    EntityId extends ValueObject,
-    SearchInput,
-    SearchOutput    
-> 
-extends IRepository<E, EntityId> {
- sortableFields: string[]
-search(props: SearchInput): Promise<SearchOutput>
-}

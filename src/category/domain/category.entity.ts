@@ -2,7 +2,7 @@ import { Entity } from "../../shared/domain/entity"
 import { EntityValidationError } from "../../shared/domain/validators/validation.error"
 import { ValueObject } from "../../shared/domain/value-object"
 import { Uuid } from "../../shared/domain/value-objects/uuid.vo"
-import { CategoryValidatorFactory } from "../category.validator"
+import { CategoryValidatorFactory } from "./category.validator"
 
 export type CategoryConstructorProps = {
     category_id?: Uuid

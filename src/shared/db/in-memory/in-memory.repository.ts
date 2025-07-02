@@ -2,29 +2,50 @@ import { Entity } from "../../domain/entity";
 import { IRepository } from "../../domain/repository/repository-interface";
 import { ValueObject } from "../../domain/value-object";
 
-export class InMemoryRepository <E extends Entity, EntityId extends ValueObject> implements IRepository<E, EntityId> {
+export abstract class InMemoryRepository <E extends Entity, EntityId extends ValueObject> implements IRepository<E, EntityId> {
 
     items: E[] = []
     async insert(entity: any): Promise<void> {
        this.items.push(entity)
     }
+
     async bulkInsert(entities: any[]): Promise<void> {
        this.items.push(...entities)
     }
-    update(entity: any): Promise<void> {
-        throw new Error("Method not implemented.");
+
+    async update(entity: any): Promise<void> {
+        const indexFound = this.items.findIndex((item) => {
+            item.entity_id.equals(entity.entity_id)
+        }) 
+        if(indexFound === -1) {
+            throw new Error('Entity not found');
+        }
+        this.items[indexFound] = entity
     }
-    delete(entity: any): Promise<void> {
-        throw new Error("Method not implemented.");
+
+    async delete(entity_id: any): Promise<void> {
+        const indexFound = this.items.findIndex((item) => {
+            item.entity_id.equals(entity_id)
+        })
+        if(indexFound === -1) {
+            throw new Error("Entity not found")
+        }
+        this.items.splice(indexFound, 1)
     }
-    findById(entity_id: any): Promise<any> {
-        throw new Error("Method not implemented.");
+
+    findById(entity_id: any): Promise<E> {
+
+        return this._get(entity_id)
     }
+
     async findAll(): Promise<any[]> {
         return this.items
     }
-    getEntity(): new (...args: any[]) => any {
-        throw new Error("Method not implemented.");
+
+    async _get(entity_id: EntityId){
+        const item = this.items.find((item) => item.entity_id.equals(entity_id))
+        return typeof item === 'undefined' ? null : item;
     }
 
+    abstract getEntity(): new (...args: any[]) => E;
 }

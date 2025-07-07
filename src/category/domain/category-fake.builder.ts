@@ -1,11 +1,12 @@
 import { Chance } from 'chance';
-import { Category, CategoryId } from './category.aggregate';
+import { Category } from './category.entity';
+import { Uuid } from '../../shared/domain/value-objects/uuid.vo';
 
 type PropOrFactory<T> = T | ((index: number) => T);
 
 export class CategoryFakeBuilder<TBuild = any> {
   // auto generated in entity
-  private _category_id: PropOrFactory<CategoryId> | undefined = undefined;
+  private _category_id: PropOrFactory<Uuid> | undefined = undefined;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private _name: PropOrFactory<string> = (_index) => this.chance.word();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -33,7 +34,7 @@ export class CategoryFakeBuilder<TBuild = any> {
     this.chance = Chance();
   }
 
-  withCategoryId(valueOrFactory: PropOrFactory<CategoryId>) {
+  withCategoryId(valueOrFactory: PropOrFactory<Uuid>) {
     this._category_id = valueOrFactory;
     return this;
   }

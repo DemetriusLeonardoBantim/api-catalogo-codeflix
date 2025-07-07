@@ -6,6 +6,7 @@ import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
 import { NotFoundError } from '../../../../shared/domain/errors/not-found.error';
 import { SearchResult } from '../../../../shared/domain/repository/search-result';
 import { ISearchableRepository } from '../../../../shared/domain/repository/repository-interface';
+import { CategoryModelMapper } from './category-model-mapper';
 
 export type CategoryFilter = string;
 
@@ -36,32 +37,26 @@ export class CategorySequelizeRepository implements ISearchableRepository<Catego
     }
 
     async bulkInsert(entities: Category[]): Promise<void> {
-        await this.categoryModel.bulkCreate(
-            entities.map((entity) => ({
-                category_id: entity.category_id.id,
-                name: entity.name,
-                description: entity.description,
-                is_active: entity.is_active,
-                created_at: entity.created_at
-            }))
-        )
+        const modelsProps = entities.map((entity) =>
+        CategoryModelMapper.toModel(entity).toJSON(),
+        );
+        await this.categoryModel.bulkCreate(modelsProps);
     }
 
     async update(entity: Category): Promise<void> {
         const id = entity.category_id.id;
-        const model = await this._get(entity.category_id.id)
-        if(!model) {
-            throw new NotFoundError(id, this.getEntity())
+
+        const modelProps = CategoryModelMapper.toModel(entity);
+        const [affectedRows] = await this.categoryModel.update(
+        modelProps.toJSON(),
+        {
+            where: { category_id: entity.category_id.id },
+        },
+        );
+
+        if (affectedRows !== 1) {
+        throw new NotFoundError(id, this.getEntity());
         }
-        this.categoryModel.update({
-            category_id: entity.category_id.id,
-            name: entity.name,
-            description: entity.description,
-            is_active: entity.is_active,
-            craeted_at: entity.created_at
-        },  
-            {where: {category_id: id} }
-        )
     }
 
     async delete(category_id: Uuid): Promise<void> {
@@ -100,7 +95,6 @@ export class CategorySequelizeRepository implements ISearchableRepository<Catego
         })
         
     }
-
     async search(props: CategorySearchParams): Promise<CategorySearchResult> {
         const offset = (props.page - 1) * props.per_page
         const limit = props.per_page

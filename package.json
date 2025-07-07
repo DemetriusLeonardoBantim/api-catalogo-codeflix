@@ -15,6 +15,7 @@
     "@swc/jest": "^0.2.29",
     "@types/jest": "^30.0.0",
     "@types/lodash": "^4.17.19",
+    "@types/sequelize": "^4.28.20",
     "jest": "^30.0.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
@@ -24,6 +25,8 @@
     "chance": "^1.1.13",
     "class-validator": "^0.14.2",
     "lodash": "^4.17.21",
+    "sequelize": "^6.37.7",
+    "sequelize-typescript": "^2.1.6",
     "uuid": "^11.1.0"
   }
 }

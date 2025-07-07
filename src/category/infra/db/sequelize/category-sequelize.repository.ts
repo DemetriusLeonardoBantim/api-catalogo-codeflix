@@ -38,11 +38,11 @@ export class CategorySequelizeRepository implements ICategoryRepository {
     }
 
     update(entity: Category): Promise<void> {
-        
+        throw new Error('Method not implemented.')
     }
 
     delete(entity_id: Uuid): Promise<void> {
-        
+        throw new Error('Method not implemented.')
     }
     
     async findAll(): Promise<Category[]> {
@@ -56,7 +56,14 @@ export class CategorySequelizeRepository implements ICategoryRepository {
                 created_at: model.created_at
             })
         })
+    
     }
 
+    findById(entity_id: Uuid): Promise<Category> {
+        throw new Error('Method not implemented.')    
+    }
 
+    getEntity(): new (...args: any[]) => Category {
+        throw new Error('Method not implemented.')
+    }
 }

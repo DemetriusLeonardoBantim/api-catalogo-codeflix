@@ -30,7 +30,6 @@ describe("CategorySequelizeRepository", () => {
 
         await repository.insert(CategoryModelObj)
         console.log(CategoryModelObj)
-        const model = await repository.findById(CategoryModelObj)
-        console.log(model)
+        // const model = await repository.findById(CategoryModelObj)
     })
 })

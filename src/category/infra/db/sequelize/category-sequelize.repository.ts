@@ -1,10 +1,12 @@
 import {Op, literal } from 'sequelize'
-import { SortDirection } from "../../../../shared/domain/repository/search-params";
+import { SearchParams, SortDirection } from "../../../../shared/domain/repository/search-params";
 import { ICategoryRepository } from "../../../domain/category.repository";
 import { CategoryModel } from './category.model';
 import { Category } from '../../../domain/category.entity';
 import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
 import { NotFoundError } from '../../../../shared/domain/errors/not-found.error';
+import { SearchResult } from '../../../../shared/domain/repository/search-result';
+import { Entity } from '../../../../shared/domain/entity';
 
 export class CategorySequelizeRepository implements ICategoryRepository {
     sortableFields: string[] = ['name', 'created_at'];
@@ -89,6 +91,10 @@ export class CategorySequelizeRepository implements ICategoryRepository {
             created_at: model.created_at
         })
         
+    }
+
+    search(props: SearchParams<string>): Promise<SearchResult<Entity>> {
+        throw new Error('Method not implmented.')
     }
 
     getEntity(): new (...args: any[]) => Category {

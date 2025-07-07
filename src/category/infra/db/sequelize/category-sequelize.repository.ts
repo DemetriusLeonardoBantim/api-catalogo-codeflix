@@ -64,6 +64,6 @@ export class CategorySequelizeRepository implements ICategoryRepository {
     }
 
     getEntity(): new (...args: any[]) => Category {
-        throw new Error('Method not implemented.')
+        return Category
     }
 }

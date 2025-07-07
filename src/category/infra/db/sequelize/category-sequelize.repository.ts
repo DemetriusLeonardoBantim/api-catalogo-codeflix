@@ -4,6 +4,7 @@ import { ICategoryRepository } from "../../../domain/category.repository";
 import { CategoryModel } from './category.model';
 import { Category } from '../../../domain/category.entity';
 import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
+import { NotFoundError } from '../../../../shared/domain/errors/not-found.error';
 
 export class CategorySequelizeRepository implements ICategoryRepository {
     sortableFields: string[] = ['name', 'created_at'];
@@ -37,12 +38,31 @@ export class CategorySequelizeRepository implements ICategoryRepository {
         )
     }
 
-    update(entity: Category): Promise<void> {
-        throw new Error('Method not implemented.')
+    async update(entity: Category): Promise<void> {
+        const id = entity.category_id.id;
+        const model = await this._get(entity.category_id.id)
+        if(!model) {
+            throw new NotFoundError(id, this.getEntity())
+        }
+        this.categoryModel.update({
+            category_id: entity.category_id.id,
+            name: entity.name,
+            description: entity.description,
+            is_active: entity.is_active,
+            craeted_at: entity.created_at
+        },  
+            {where: {category_id: id} }
+        )
     }
 
-    delete(entity_id: Uuid): Promise<void> {
-        throw new Error('Method not implemented.')
+    async delete(category_id: Uuid): Promise<void> {
+        const id = category_id.id;
+        const model = await this._get(id)
+        if(!model) {
+            throw new NotFoundError(id, this.getEntity())
+        }
+
+        await this.categoryModel.destroy({where: {category_id: id}})
     }
     
     async findAll(): Promise<Category[]> {

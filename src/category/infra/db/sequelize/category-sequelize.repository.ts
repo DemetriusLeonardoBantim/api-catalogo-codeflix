@@ -90,6 +90,7 @@ export class CategorySequelizeRepository implements ISearchableRepository<Catego
 
     async findById(entity_id: Uuid): Promise<Category> {
         const model = await this._get(entity_id.id)
+        console.log('aq', model)
         return new Category({
             category_id: new Uuid(model.category_id),
             name: model.name,

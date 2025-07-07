@@ -59,11 +59,23 @@ export class CategorySequelizeRepository implements ICategoryRepository {
     
     }
 
-    findById(entity_id: Uuid): Promise<Category> {
-        throw new Error('Method not implemented.')    
+    async findById(entity_id: Uuid): Promise<Category> {
+        const model = await this._get(entity_id.id)
+        return new Category({
+            category_id: new Uuid(model.category_id),
+            name: model.name,
+            description: model.description,
+            is_active: model.is_active,
+            created_at: model.created_at
+        })
+        
     }
 
     getEntity(): new (...args: any[]) => Category {
         return Category
+    }
+
+    private async _get(id: string) {
+        return await this.categoryModel.findByPk(id)
     }
 }

@@ -14,7 +14,7 @@ export class CreateCategoryUseCase implements IUseCase<CreateCategoryInput, Crea
             name: entity.name,
             description: entity.description,
             is_active: entity.is_active,
-            create_at: entity.created_at
+            created_at: entity.created_at
         }
     }
 }

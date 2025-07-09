@@ -109,12 +109,12 @@ export class ConfigModule extends NestConfigModule {
         join(process.cwd(), 'envs', `.env.${process.env.NODE_ENV!}`),
         join(process.cwd(), 'envs', `.env`),
       ],
-      validationSchema: Joi.object({
-        ...CONFIG_DB_SCHEMA,
+/*       validationSchema: Joi.object({
+
         ...CONFIG_GOOGLE_SCHEMA,
         ...CONFIG_RABBITMQ_SCHEMA,
         ...CONFIG_JWT_SCHEMA,
-      }),
+      }), */
       ...otherOptions,
     });
   }

@@ -42,7 +42,7 @@ export class CategorySequelizeRepository
   }
 
   async bulkInsert(entities: Category[]): Promise<void> {
-    const modelsProps = entities.map((entity) =>
+    const modelsProps = entities.map((entity: Category) =>
       CategoryModelMapper.toModel(entity).toJSON(),
     );
     await this.categoryModel.bulkCreate(modelsProps);

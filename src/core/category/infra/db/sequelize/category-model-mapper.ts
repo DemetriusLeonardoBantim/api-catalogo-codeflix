@@ -1,6 +1,6 @@
-import { Uuid } from "../../../../shared/domain/value-objects/uuid.vo";
-import { Category } from "../../../domain/category.entity";
-import { CategoryModel } from "./category.model";
+import { Uuid } from '../../../../shared/domain/value-objects/uuid.vo';
+import { Category } from '../../../domain/category.entity';
+import { CategoryModel } from './category.model';
 
 export class CategoryModelMapper {
   static toModel(entity: Category): CategoryModel {
@@ -14,12 +14,12 @@ export class CategoryModelMapper {
   }
 
   static toEntity(model: CategoryModel): Category {
-        return new Category({
-        category_id: new Uuid(model.category_id),
-        name: model.name,
-        description: model.description,
-        is_active: model.is_active,
-        created_at: model.created_at,
-        });
-    }
+    return new Category({
+      category_id: new Uuid(model.category_id),
+      name: model.name,
+      description: model.description,
+      is_active: model.is_active,
+      created_at: model.created_at,
+    });
+  }
 }

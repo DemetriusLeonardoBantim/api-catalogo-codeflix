@@ -1,26 +1,24 @@
-import { Sequelize } from "sequelize-typescript"
-import { CategoryModel } from '../category.model'
-
+import { Sequelize } from 'sequelize-typescript';
+import { CategoryModel } from '../category.model';
 
 describe('CategoryModel Integration Tests', () => {
+  test('Should create a category', async () => {
+    const sequelize = new Sequelize({
+      dialect: 'sqlite',
+      storage: ':memory:',
+      models: [CategoryModel],
+    });
 
-    test('Should create a category', async () => {
-        const sequelize = new Sequelize({
-            dialect: "sqlite",
-            storage: ":memory:",
-            models: [CategoryModel]
-        })
+    await sequelize.sync({ force: true });
 
-        await sequelize.sync({ force: true })
-    
-        const CategoryModelObj = CategoryModel.create({
-            category_id: 'a5d3e95e-3ac9-4a6f-baf8-8d27d7bb9131',
-            name: 'teste',
-            description: 'description teste',
-            is_active: true,
-            created_at: new Date()
-        })
+    const CategoryModelObj = CategoryModel.create({
+      category_id: 'a5d3e95e-3ac9-4a6f-baf8-8d27d7bb9131',
+      name: 'teste',
+      description: 'description teste',
+      is_active: true,
+      created_at: new Date(),
+    });
 
-        expect(CategoryModelObj).toBeTruthy()
-    }) 
-})
+    expect(CategoryModelObj).toBeTruthy();
+  });
+});

@@ -1,6 +1,9 @@
 import { Entity } from '../../../domain/entity';
 import { NotFoundError } from '../../../domain/errors/not-found.error';
-import { IRepository, ISearchableRepository } from '../../../domain/repository/repository-interface';
+import {
+  IRepository,
+  ISearchableRepository,
+} from '../../../domain/repository/repository-interface';
 
 import {
   SearchParams,
@@ -63,7 +66,6 @@ export abstract class InMemoryRepository<
     ids: EntityId[],
   ): Promise<{ exists: EntityId[]; not_exists: EntityId[] }> {
     if (!ids.length) {
-
     }
 
     if (this.items.length === 0) {
@@ -143,9 +145,9 @@ export abstract class InMemorySearchableRepository<
     }
 
     return [...items].sort((a, b) => {
-        // @ts-ignore
+      // @ts-ignore
       const aValue = custom_getter ? custom_getter(sort, a) : a[sort];
-        // @ts-ignore
+      // @ts-ignore
       const bValue = custom_getter ? custom_getter(sort, b) : b[sort];
       if (aValue < bValue) {
         return sort_dir === 'asc' ? -1 : 1;

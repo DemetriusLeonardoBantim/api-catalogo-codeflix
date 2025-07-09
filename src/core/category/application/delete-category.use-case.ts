@@ -8,7 +8,7 @@ export class DeleteCategoryUseCase
   constructor(private categoryRepo: ICategoryRepository) {}
 
   async execute(input: DeleteCategoryInput): Promise<DeleteCategoryOutput> {
-    const categoryId = new Uuid(input.id)
+    const categoryId = new Uuid(input.id);
     await this.categoryRepo.delete(categoryId);
   }
 }

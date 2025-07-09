@@ -10,6 +10,7 @@ import { NotFoundError } from '../../../../shared/domain/errors/not-found.error'
 import { SearchResult } from '../../../../shared/domain/repository/search-result';
 import { ISearchableRepository } from '../../../../shared/domain/repository/repository-interface';
 import { CategoryModelMapper } from './category-model-mapper';
+import { Injectable } from '@nestjs/common';
 
 export type CategoryFilter = string;
 
@@ -17,6 +18,7 @@ export class CategorySearchParams extends SearchParams<CategoryFilter> {}
 
 export class CategorySearchResult extends SearchResult<Category> {}
 
+@Injectable()
 export class CategorySequelizeRepository
   implements ISearchableRepository<Category, Uuid>
 {
@@ -31,7 +33,7 @@ export class CategorySequelizeRepository
 
   async insert(entity: Category): Promise<void> {
     await this.categoryModel.create({
-      id: entity.category_id.id,
+      id: entity?.category_id?.id,
       name: entity.name,
       description: entity.is_active,
       is_active: entity.is_active,
@@ -47,13 +49,13 @@ export class CategorySequelizeRepository
   }
 
   async update(entity: Category): Promise<void> {
-    const id = entity.category_id.id;
+    const id = entity?.category_id?.id;
 
     const modelProps = CategoryModelMapper.toModel(entity);
     const [affectedRows] = await this.categoryModel.update(
       modelProps.toJSON(),
       {
-        where: { category_id: entity.category_id.id },
+        where: { category_id: entity?.category_id?.id },
       },
     );
 
@@ -87,7 +89,6 @@ export class CategorySequelizeRepository
 
   async findById(entity_id: Uuid): Promise<Category> {
     const model = await this._get(entity_id.id);
-    console.log('aq', model);
     return new Category({
       category_id: new Uuid(model.category_id),
       name: model.name,

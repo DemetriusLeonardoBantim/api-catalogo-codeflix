@@ -11,7 +11,7 @@ export class CreateCategoryUseCase
     const entity = Category.create(input);
     await this.categoryRepo.insert(entity);
     return {
-      id: entity.category_id.id,
+      id: entity?.category_id?.id,
       name: entity.name,
       description: entity.description,
       is_active: entity.is_active,

@@ -5,7 +5,7 @@ import { CategoryModel } from './category.model';
 export class CategoryModelMapper {
   static toModel(entity: Category): CategoryModel {
     return CategoryModel.build({
-      category_id: entity.category_id.id,
+      category_id: entity?.category_id?.id,
       name: entity.name,
       description: entity.description,
       is_active: entity.is_active,

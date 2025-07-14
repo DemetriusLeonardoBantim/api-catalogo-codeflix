@@ -1,4 +1,10 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateCategoryDto } from './create-category.dto';
+import { OmitType } from '@nestjs/mapped-types';
 
-export class UpdateCategoryDto extends PartialType(CreateCategoryDto) {}
+export class UpdateCategoryInpuitWithoutId extends OmitType(
+  UpdateCategoryInput,
+  ['id'] as const,
+) {}
+
+export class UpdateCategoryDto extends UpdateCategoryInpuitWithoutId {}
+
+// Criar os arquivos de UseCase

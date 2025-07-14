@@ -1,3 +1,5 @@
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-return */
@@ -49,10 +51,13 @@ export class CategoriesController {
   findOne(@Param('id') id: string) {}
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
-    @Body() updateCategoryDto: UpdateCategoryDto,
-  ) {}
+    @Body() updateCategoryDto: any,
+  ) {
+    const output = await this.updateUseCase.execute(updateCategoryDto)
+    return CategoriesController.serialize(output)
+  }
 
   @Delete(':id')
   remove(@Param('id') id: string) {}
